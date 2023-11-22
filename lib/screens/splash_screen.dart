@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kel7/screens/home_screen.dart';
+import 'package:kel7/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _route() async {
     Timer(const Duration(seconds: 5), () async {
-      Navigator.of(context).pushNamed('/Login');
+      Get.to(() => const LoginScreen());
     });
   }
 

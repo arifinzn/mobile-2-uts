@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mobile_2_uts_kel7">
+    package="com.kel7.sosmed">
    <application
         android:label="mobile_2_uts_kel7"
         android:name="${applicationName}"

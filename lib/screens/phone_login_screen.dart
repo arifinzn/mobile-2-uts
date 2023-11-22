@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kel7/helpers/app_buttons.dart';
 import 'package:kel7/helpers/app_constants.dart';
 import 'package:kel7/helpers/app_text_field.dart';
 import 'package:kel7/helpers/custom_texts.dart';
@@ -10,18 +9,17 @@ import 'package:kel7/screens/forgot_password_screen.dart';
 import 'package:kel7/screens/register_screen.dart';
 import 'package:kel7/screens/social_login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+import '../helpers/app_buttons.dart';
+
+class PhoneLoginScreen extends StatefulWidget {
+  const PhoneLoginScreen({Key? key}) : super(key: key);
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  PhoneLoginScreenState createState() => PhoneLoginScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-
-  // final LoginController controller = Get.find();
+class PhoneLoginScreenState extends State<PhoneLoginScreen> {
+  TextEditingController phone = TextEditingController();
 
   bool showPassword = false;
 
@@ -42,29 +40,30 @@ class LoginScreenState extends State<LoginScreen> {
             child: SizedBox(
               height: Get.height,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       height: Get.height * 0.08,
                     ),
+                    Heading3Text(welcomeString.tr, weight: TextWeight.bold),
+                    SizedBox(
+                      height: Get.height * 0.01,
+                    ),
                     Heading3Text(signInMessageString.tr,
                         weight: TextWeight.medium),
+
                     SizedBox(
-                      height: Get.height * 0.05,
+                      height: Get.height * 0.1,
                     ),
-                    AppTextField(
-                      controller: email,
-                      hintText: emailOrUsernameString.tr,
+                    AppMobileTextField(
+                      controller: phone,
+                      // showDivider: true,
+                      hintText: phoneNumberString.tr,
+                      // cornerRadius: 5,
+                      countryCodeText: '+62',
+                      countryCodeValueChanged: (String value) {},
                     ),
-                    SizedBox(
-                      height: Get.height * 0.025,
-                    ),
-                    AppPasswordTextField(
-                      controller: password,
-                      hintText: passwordString.tr,
-                      onChanged: (value) {},
-                    ),
+
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
@@ -77,9 +76,10 @@ class LoginScreenState extends State<LoginScreen> {
                         Get.to(() => const ForgotPasswordScreen());
                       },
                       child: Center(
-                        child: BodySmallText(
+                        child: BodyMediumText(
                           forgotPwdString.tr,
                           weight: TextWeight.bold,
+                          color: AppConstants.themeColor,
                         ),
                       ),
                     ),
@@ -129,6 +129,8 @@ class LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: Get.height * 0.05,
                     ),
+                    // bioMetricView(),
+                    // const Spacer(),
                   ]),
             )).setPadding(left: 25, right: 25),
       ),
@@ -137,9 +139,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   Widget addLoginBtn() {
     return AppThemeButton(
-      onPress: () {
-        // controller.login(email.text.trim(), password.text.trim());
-      },
+      onPress: () {},
       text: signInString.tr,
     );
   }

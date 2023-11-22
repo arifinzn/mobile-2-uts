@@ -1,4 +1,4 @@
-package com.example.mobile_2_uts_kel7
+package com.kel7.sosmed
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,7 @@
 name: kel7
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -9,6 +9,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  pinch_zoom: ^1.0.0
+  shimmer: ^3.0.0
+  pull_to_refresh: ^2.0.0
+  get: ^4.6.5
+  intl: ^0.18.0
+  flutter_svg: ^2.0.5
+  # file_picker: ^5.3.2
+  # image_picker: ^1.0.1
+  currency_picker: ^2.0.16
+  country_picker: ^2.0.20
+  overlay_support: ^2.1.0
+  flutter_easyloading: ^3.0.5
+  flutter_phoenix: ^1.1.0
+  pin_code_text_field: ^1.8.0
 
 dev_dependencies:
   flutter_test:
