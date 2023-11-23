@@ -3,6 +3,7 @@
 * Version : 1.0.0
 * */
 
+import 'package:kel7/helpers/theme/custom_theme.dart';
 import 'package:kel7/screens/auth/login_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
 import 'package:kel7/helpers/widgets/my_button.dart';
@@ -20,11 +21,13 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _passwordVisible = false;
+  late CustomTheme customTheme;
   late ThemeData theme;
 
   @override
   void initState() {
     super.initState();
+    customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
   }
 

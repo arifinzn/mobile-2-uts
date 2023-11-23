@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kel7/helpers/theme/custom_theme.dart';
 
 import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+export 'custom_theme.dart';
 export 'navigation_theme.dart';
 
 ThemeData get theme => AppTheme.theme;
@@ -11,6 +13,7 @@ class AppTheme {
   static ThemeType themeType = ThemeType.light;
   static TextDirection textDirection = TextDirection.ltr;
 
+  static CustomTheme customTheme = getCustomTheme();
   static ThemeData theme = getTheme();
 
   AppTheme._();
@@ -56,6 +59,12 @@ class AppTheme {
     themeType = themeType ?? AppTheme.themeType;
     if (themeType == ThemeType.light) return lightTheme;
     return darkTheme;
+  }
+
+  static CustomTheme getCustomTheme([ThemeType? themeType]) {
+    themeType = themeType ?? AppTheme.themeType;
+    if (themeType == ThemeType.light) return CustomTheme.lightCustomTheme;
+    return CustomTheme.darkCustomTheme;
   }
 
   /// -------------------------- Light Theme  -------------------------------------------- ///

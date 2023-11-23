@@ -1,3 +1,4 @@
+import 'package:kel7/helpers/theme/custom_theme.dart';
 import 'package:kel7/screens/auth/register_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
 import 'package:kel7/helpers/widgets/my_button.dart';
@@ -6,6 +7,7 @@ import 'package:kel7/helpers/widgets/my_spacing.dart';
 import 'package:kel7/helpers/widgets/my_text.dart';
 import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:kel7/screens/features/home_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,11 +17,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool? _passwordVisible = false, _check = false;
+  late CustomTheme customTheme;
   late ThemeData theme;
 
   @override
   void initState() {
     super.initState();
+
+    customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
   }
 
@@ -128,7 +133,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 elevation: 0,
                                 borderRadiusAll: 4,
                                 padding: MySpacing.y(20),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
+                                },
                                 child: MyText.labelMedium("LOGIN",
                                     fontWeight: 600,
                                     color: theme.colorScheme.onPrimary,
@@ -144,7 +154,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               elevation: 0,
                               borderRadiusAll: 4,
                               padding: MySpacing.y(20),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
@@ -162,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => RegisterScreen()));
