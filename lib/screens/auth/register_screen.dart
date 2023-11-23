@@ -1,241 +1,212 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:get/get.dart';
-import 'package:kel7/controllers/login_controller.dart';
-import 'package:kel7/helpers/app_buttons.dart';
+/*
+* File : Register
+* Version : 1.0.0
+* */
 
-import 'package:kel7/helpers/app_constants.dart';
-import 'package:kel7/helpers/app_text_field.dart';
-import 'package:kel7/helpers/custom_texts.dart';
-import 'package:kel7/helpers/extension.dart';
-import 'package:kel7/helpers/localization_strings.dart';
-import 'package:kel7/helpers/theme_icon.dart';
-import 'package:kel7/screens/auth/social_login_screen.dart';
+import 'package:kel7/screens/auth/login_screen.dart';
+import 'package:kel7/helpers/theme/app_theme.dart';
+import 'package:kel7/helpers/widgets/my_button.dart';
+import 'package:kel7/helpers/widgets/my_container.dart';
+import 'package:kel7/helpers/widgets/my_spacing.dart';
+import 'package:kel7/helpers/widgets/my_text.dart';
+import 'package:kel7/helpers/widgets/my_text_style.dart';
+import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
-
   @override
-  RegisterScreenState createState() => RegisterScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
+class _RegisterScreenState extends State<RegisterScreen> {
+  bool _passwordVisible = false;
+  late ThemeData theme;
 
-  String countryCode = '+62';
-  final LoginController loginController = Get.find();
+  @override
+  void initState() {
+    super.initState();
+    theme = AppTheme.theme;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.backgroundColor,
-      body: SingleChildScrollView(
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+        body: Stack(
+      children: <Widget>[
+        ClipPath(
+            clipper: _MyCustomClipper(context),
+            child: Container(
+              alignment: Alignment.center,
+              color: theme.colorScheme.background,
+            )),
+        Positioned(
+          left: 30,
+          right: 30,
+          top: MediaQuery.of(context).size.height * 0.15,
           child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: Get.height * 0.08,
-                ),
-                Heading3Text(signUpString.tr, weight: TextWeight.medium),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
-                GetBuilder<LoginController>(
-                    init: loginController,
-                    builder: (ctx) {
-                      return Stack(children: [
-                        AppTextField(
-                          controller: name,
-                          hintText: userNameString.tr,
-                          onChanged: (value) {
-                            if (value.length > 3) {
-                              loginController.verifyUsername(value);
-                            }
-                          },
-                        ),
-                        Positioned(
-                            right: 10,
-                            bottom: 15,
-                            child: loginController.userNameCheckStatus != -1
-                                ? loginController.userNameCheckStatus == 1
-                                    ? ThemeIconWidget(
-                                        ThemeIcon.checkMark,
-                                        color: AppConstants.themeColor,
-                                      )
-                                    : ThemeIconWidget(
-                                        ThemeIcon.close,
-                                        color: AppConstants.red,
-                                      )
-                                : Container()),
-                        const SizedBox(
-                          width: 20,
-                        )
-                      ]);
-                    }),
-                SizedBox(
-                  height: Get.height * 0.015,
-                ),
-                addTextField(email, emailString.tr),
-                SizedBox(
-                  height: Get.height * 0.015,
-                ),
-                AppPasswordTextField(
-                  controller: password,
-                  hintText: passwordString.tr,
-                  onChanged: (value) {
-                    loginController.checkPassword(value);
-                  },
-                ),
-                Obx(() {
-                  return loginController.passwordStrength.value < 0.8 &&
-                          password.text.isNotEmpty
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            LinearProgressIndicator(
-                              value: loginController.passwordStrength.value,
-                              backgroundColor: Colors.grey[300],
-                              color: loginController.passwordStrength.value <=
-                                      1 / 4
-                                  ? Colors.red
-                                  : loginController.passwordStrength.value ==
-                                          2 / 4
-                                      ? Colors.yellow
-                                      : loginController
-                                                  .passwordStrength.value ==
-                                              3 / 4
-                                          ? Colors.blue
-                                          : Colors.green,
-                              minHeight: 5,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            BodySmallText(
-                              loginController.passwordStrengthText.value,
-                            ),
-                          ],
-                        )
-                      : Container();
-                }),
-                SizedBox(
-                  height: Get.height * 0.015,
-                ),
-                AppPasswordTextField(
-                  controller: confirmPassword,
-                  hintText: confirmPasswordString.tr,
-                  onChanged: (value) {},
-                ),
-                SizedBox(
-                  height: Get.height * 0.015,
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: signingInTermsString.tr,
-                          style: TextStyle(
-                              fontSize: FontSizes.b4,
-                              color: AppConstants.grayscale900)),
-                      TextSpan(
-                          text: ' ${termsOfServiceString.tr}',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // loginController.launchUrlInBrowser(
-                              //     settingsController
-                              //         .setting.value!.termsOfServiceUrl!);
-                            },
-                          style: TextStyle(
-                              fontSize: FontSizes.b4,
-                              color: AppConstants.themeColor)),
-                      TextSpan(
-                          text: ' ${andString.tr}',
-                          style: TextStyle(
-                              fontSize: FontSizes.b4,
-                              color: AppConstants.grayscale900)),
-                      TextSpan(
-                          text: ' ${privacyPolicyString.tr}',
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              // loginController.launchUrlInBrowser(
-                              //     settingsController
-                              //         .setting.value!.privacyPolicyUrl!);
-                            },
-                          style: TextStyle(
-                              fontSize: FontSizes.b4,
-                              color: AppConstants.themeColor)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                addSignUpBtn(),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+            children: <Widget>[
+              MyContainer.bordered(
+                color: theme.scaffoldBackgroundColor,
+                child: Column(
+                  children: <Widget>[
                     Container(
-                      height: 1,
-                      width: Get.width * 0.35,
-                      color: AppConstants.themeColor,
-                    ),
-                    Heading5Text(
-                      orString.tr,
+                      margin: EdgeInsets.only(top: 8),
+                      child: MyText.titleLarge("REGISTER", fontWeight: 600),
                     ),
                     Container(
-                      height: 1,
-                      width: Get.width * 0.35,
-                      color: AppConstants.themeColor,
+                      padding: EdgeInsets.only(left: 16, right: 16, top: 8),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 16),
+                            child: TextFormField(
+                              style: MyTextStyle.bodyLarge(
+                                  color: theme.colorScheme.onBackground,
+                                  fontWeight: 500),
+                              decoration: InputDecoration(
+                                hintText: "Name",
+                                hintStyle: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                prefixIcon: Icon(LucideIcons.user),
+                              ),
+                              textCapitalization: TextCapitalization.sentences,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 16),
+                            child: TextFormField(
+                              style: MyTextStyle.bodyLarge(
+                                  color: theme.colorScheme.onBackground,
+                                  fontWeight: 500),
+                              decoration: InputDecoration(
+                                hintText: "Email",
+                                hintStyle: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                prefixIcon: Icon(LucideIcons.mail),
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 16),
+                            child: TextFormField(
+                              style: MyTextStyle.bodyLarge(
+                                  color: theme.colorScheme.onBackground,
+                                  fontWeight: 500),
+                              decoration: InputDecoration(
+                                hintText: "Number",
+                                hintStyle: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                prefixIcon: Icon(LucideIcons.phone),
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 16),
+                            child: TextFormField(
+                              style: MyTextStyle.bodyLarge(
+                                  color: theme.colorScheme.onBackground,
+                                  fontWeight: 500),
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                                hintStyle: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                prefixIcon: Icon(LucideIcons.lock),
+                                suffixIcon: IconButton(
+                                  icon: Icon(_passwordVisible
+                                      ? LucideIcons.eye
+                                      : LucideIcons.eyeOff),
+                                  onPressed: () {
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  },
+                                ),
+                              ),
+                              obscureText: _passwordVisible,
+                            ),
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(top: 24),
+                              child: MyButton(
+                                  elevation: 0,
+                                  borderRadiusAll: 4,
+                                  onPressed: () {},
+                                  padding: MySpacing.xy(20, 20),
+                                  child: MyText.labelMedium("REGISTER",
+                                      fontWeight: 600,
+                                      color: theme.colorScheme.onPrimary))),
+                        ],
+                      ),
                     )
                   ],
                 ),
-                SizedBox(
-                  height: Get.height * 0.04,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 16, bottom: 8),
+                  child: RichText(
+                    text: TextSpan(children: <TextSpan>[
+                      TextSpan(
+                          text: "I've already an Account? ",
+                          style: MyTextStyle.bodyMedium(fontWeight: 500)),
+                      TextSpan(
+                          text: " Login",
+                          style: MyTextStyle.bodyMedium(
+                              fontWeight: 600,
+                              color: theme.colorScheme.primary)),
+                    ]),
+                  ),
                 ),
-                const SocialLoginScreen(hidePhoneLogin: true)
-                    .setPadding(left: 45, right: 45),
-                SizedBox(
-                  height: Get.height * 0.2,
-                ),
-              ]),
-        ).setPadding(left: 25, right: 25),
-      ),
-    );
+              )
+            ],
+          ),
+        ),
+        Positioned(
+          top: MySpacing.safeAreaTop(context) + 12,
+          left: 16,
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              LucideIcons.chevronLeft,
+              color: theme.colorScheme.onBackground,
+            ),
+          ),
+        )
+      ],
+    ));
+  }
+}
+
+class _MyCustomClipper extends CustomClipper<Path> {
+  final BuildContext _context;
+
+  _MyCustomClipper(this._context);
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    Size size = MediaQuery.of(_context).size;
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height * 0.3);
+    path.lineTo(0, size.height * 0.6);
+    path.close();
+    return path;
   }
 
-  Widget addTextField(TextEditingController controller, String hintText) {
-    return AppTextField(
-      controller: controller,
-      hintText: hintText,
-    );
-  }
-
-  addSignUpBtn() {
-    return AppThemeButton(
-      onPress: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-        // loginController.register(
-        //   name: name.text,
-        //   email: email.text,
-        //   password: password.text,
-        //   confirmPassword: confirmPassword.text,
-        // );
-      },
-      text: signUpString.tr,
-    );
+  @override
+  bool shouldReclip(CustomClipper oldClipper) {
+    return false;
   }
 }
