@@ -6,7 +6,7 @@ import 'package:kel7/helpers/app_text_field.dart';
 import 'package:kel7/helpers/custom_texts.dart';
 import 'package:kel7/helpers/extension.dart';
 import 'package:kel7/helpers/localization_strings.dart';
-import 'package:kel7/helpers/top_navigation_bar.dart';
+import 'package:kel7/widgets/top_navigation_bar.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);

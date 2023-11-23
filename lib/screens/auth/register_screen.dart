@@ -10,7 +10,7 @@ import 'package:kel7/helpers/custom_texts.dart';
 import 'package:kel7/helpers/extension.dart';
 import 'package:kel7/helpers/localization_strings.dart';
 import 'package:kel7/helpers/theme_icon.dart';
-import 'package:kel7/screens/social_login_screen.dart';
+import 'package:kel7/screens/auth/social_login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

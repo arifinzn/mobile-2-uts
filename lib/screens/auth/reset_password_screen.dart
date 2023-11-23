@@ -7,8 +7,8 @@ import 'package:kel7/helpers/custom_texts.dart';
 import 'package:kel7/helpers/extension.dart';
 import 'package:kel7/helpers/localization_strings.dart';
 import 'package:kel7/helpers/rounded_input_field.dart';
-import 'package:kel7/screens/login_screen.dart';
-import 'package:kel7/screens/password_changed_popup.dart';
+import 'package:kel7/screens/auth/login_screen.dart';
+import 'package:kel7/widgets/password_changed_popup.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String token;

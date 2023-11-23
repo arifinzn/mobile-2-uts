@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kel7/helpers/app_constants.dart';
 import 'package:kel7/helpers/extension.dart';
-import 'package:kel7/screens/login_screen.dart';
-import 'package:kel7/screens/phone_login_screen.dart';
+import 'package:kel7/screens/auth/phone_login_screen.dart';
+import 'package:kel7/screens/auth/login_screen.dart';
 
 class SocialLoginScreen extends StatefulWidget {
   final bool hidePhoneLogin;

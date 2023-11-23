@@ -171,3 +171,132 @@ String fwdString = 'Forward';
 String logoutString = 'Log Out';
 String changePwdString = 'Change Password';
 String logoutConfirmationString = "Are you sure, you want to logout?";
+
+String timeToUpdateAppString = 'Time to update app';
+String usingOlderVersionMessageString =
+    'You are using older version of app, You need to update the app to continue';
+
+String updateString = 'Update';
+String allString = 'All';
+String exploreString = 'Explore';
+
+String cameraString = 'Camera';
+String photoString = 'Photo';
+String sentAPhotoString = 'Sent a Photo';
+
+String videoString = 'Video';
+String sentAVideoString = 'Sent a Video';
+
+String photosString = 'Photos';
+String mediaString = 'Media';
+String exportChatString = 'Export chat';
+String exportChatWithMediaString = 'Export chat with media';
+String exportChatWithoutMediaString = 'Export chat without media';
+String chatsString = 'Chats';
+String accountString = 'Account';
+String clubMembersString = "Members";
+String joinedString = 'Joined';
+String joinString = 'Join';
+
+String timeString = 'Time';
+String dateString = 'Date';
+
+String followString = 'Follow';
+String followBackString = 'Follow back';
+String likeBackString = 'Like back';
+String unInviteString = 'Cancel';
+String pendingApprovalString = 'Pending';
+String unFollowString = 'UnFollow';
+
+String newFollowerString = 'New Follower';
+
+String followingString = 'Following';
+String followersString = 'Followers';
+String noUserFoundString = "No user found";
+
+String noPostFoundString = "No post updates found";
+String followFriendsToSeeUpdatesString =
+    "Follow your friends to see their post updates";
+
+String onlineString = 'Online';
+String offlineString = 'Offline';
+
+String lastSeenString = 'Last seen';
+
+String justNowString = "Just now";
+String monthsAgoString = "months ago";
+String monthAgoString = "month ago";
+String weekAgoString = "week ago";
+String lastWeekString = "Last week";
+String daysAgoString = "days ago";
+String dayAgoString = "day ago";
+String yesterdayString = "Yesterday";
+String hoursAgoString = "hours ago";
+String hoursString = "hours";
+String anHourAgoString = "An hour ago";
+String minutesAgoString = "minutes ago";
+String aMinuteAgoString = "A minute ago";
+String secondsAgoString = "seconds ago";
+
+String feMinutesString = 'Few minutes';
+String minutesString = 'minutes';
+String daysString = 'days';
+String noDataString = 'No data found';
+
+String wantToReportString = 'Want to report this?';
+String reportedString = 'Reported';
+String postReportedSuccessfullyString = 'Post is reported successfully';
+String userReportedSuccessfullyString = 'User is reported successfully';
+String storyReportedSuccessfullyString = 'Story is reported successfully';
+String userBlockedSuccessfullyString = 'User is blocked successfully';
+
+String reportString = 'Report';
+String blockString = 'Block';
+String unblockString = 'Unblock';
+String areYouSureToReportPostString = 'Are you sure to report this post?';
+String blockUserString = 'Block User';
+String blockedUserString = 'Blocked User';
+String manageBlockedUserString = 'Manage Blocked User list';
+
+String addRelationshipString = 'Add Relationship';
+String relationshipString = 'View Relationships';
+String areYouSureToBlockUserString = 'Are you sure to block this user?';
+
+String likesString = 'Likes';
+String likeString = 'Like';
+String offString = 'Off';
+String liveString = 'Live';
+String liveEndString = 'Live End';
+String ringingString = 'Ringing';
+
+String wallpaperString = 'Wallpaper';
+String wallpapersString = 'Wallpapers';
+
+String friendsString = 'Friends';
+String shareString = 'Share';
+String shareContactsString = 'Share Contacts';
+
+String deletePostString = 'Delete Post';
+String editPostString = 'Edit Post';
+
+String postDeletedSuccessfullyString = 'Post is deleted successfully';
+
+// new keys version 3
+
+String postingString = 'Posting...';
+String postFailedString = 'Failed posting';
+
+String retryString = 'Retry';
+String discardString = 'Discard';
+String postsString = 'Posts';
+String postString = 'Post';
+String sentAPostString = 'Sent a Post';
+
+String viewsString = 'Views';
+String viewString = 'View';
+
+String writeCommentString = 'Write comment';
+String commentsString = 'Comments';
+String viewAllString = 'View all';
+String allowCommentsString = 'Allow comments';
+String newCommentString = 'New Comment';

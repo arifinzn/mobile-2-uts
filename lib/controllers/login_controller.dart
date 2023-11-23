@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:kel7/helpers/app_util.dart';
 import 'package:kel7/helpers/form_validator.dart';
 import 'package:kel7/helpers/localization_strings.dart';
-import 'package:kel7/screens/home_screen.dart';
-import 'package:kel7/screens/reset_password_screen.dart';
-import 'package:kel7/screens/verify_phone_login_otp_screen.dart';
+import 'package:kel7/screens/home/home_screen.dart';
+import 'package:kel7/screens/auth/reset_password_screen.dart';
+import 'package:kel7/screens/auth/verify_phone_login_otp_screen.dart';
 
 bool isLoginFirstTime = false;
 

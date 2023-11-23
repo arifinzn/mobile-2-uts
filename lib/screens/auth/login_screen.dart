@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kel7/controllers/login_controller.dart';
+import 'package:kel7/helpers/app_buttons.dart';
 import 'package:kel7/helpers/app_constants.dart';
 import 'package:kel7/helpers/app_text_field.dart';
 import 'package:kel7/helpers/custom_texts.dart';
 import 'package:kel7/helpers/extension.dart';
 import 'package:kel7/helpers/localization_strings.dart';
-import 'package:kel7/screens/forgot_password_screen.dart';
-import 'package:kel7/screens/register_screen.dart';
-import 'package:kel7/screens/social_login_screen.dart';
+import 'package:kel7/screens/auth/forgot_password_screen.dart';
+import 'package:kel7/screens/auth/register_screen.dart';
+import 'package:kel7/screens/auth/social_login_screen.dart';
 
-import '../helpers/app_buttons.dart';
-
-class PhoneLoginScreen extends StatefulWidget {
-  const PhoneLoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  PhoneLoginScreenState createState() => PhoneLoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class PhoneLoginScreenState extends State<PhoneLoginScreen> {
-  TextEditingController phone = TextEditingController();
+class LoginScreenState extends State<LoginScreen> {
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  final LoginController controller = Get.find();
 
   bool showPassword = false;
 
@@ -40,30 +43,29 @@ class PhoneLoginScreenState extends State<PhoneLoginScreen> {
             child: SizedBox(
               height: Get.height,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: Get.height * 0.08,
                     ),
-                    Heading3Text(welcomeString.tr, weight: TextWeight.bold),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
                     Heading3Text(signInMessageString.tr,
                         weight: TextWeight.medium),
-
                     SizedBox(
-                      height: Get.height * 0.1,
+                      height: Get.height * 0.05,
                     ),
-                    AppMobileTextField(
-                      controller: phone,
-                      // showDivider: true,
-                      hintText: phoneNumberString.tr,
-                      // cornerRadius: 5,
-                      countryCodeText: '+62',
-                      countryCodeValueChanged: (String value) {},
+                    AppTextField(
+                      controller: email,
+                      hintText: emailOrUsernameString.tr,
                     ),
-
+                    SizedBox(
+                      height: Get.height * 0.025,
+                    ),
+                    AppPasswordTextField(
+                      controller: password,
+                      hintText: passwordString.tr,
+                      onChanged: (value) {},
+                    ),
                     SizedBox(
                       height: Get.height * 0.04,
                     ),
@@ -76,10 +78,9 @@ class PhoneLoginScreenState extends State<PhoneLoginScreen> {
                         Get.to(() => const ForgotPasswordScreen());
                       },
                       child: Center(
-                        child: BodyMediumText(
+                        child: BodySmallText(
                           forgotPwdString.tr,
                           weight: TextWeight.bold,
-                          color: AppConstants.themeColor,
                         ),
                       ),
                     ),
@@ -129,8 +130,6 @@ class PhoneLoginScreenState extends State<PhoneLoginScreen> {
                     SizedBox(
                       height: Get.height * 0.05,
                     ),
-                    // bioMetricView(),
-                    // const Spacer(),
                   ]),
             )).setPadding(left: 25, right: 25),
       ),
@@ -139,7 +138,9 @@ class PhoneLoginScreenState extends State<PhoneLoginScreen> {
 
   Widget addLoginBtn() {
     return AppThemeButton(
-      onPress: () {},
+      onPress: () {
+        controller.login(email.text.trim(), password.text.trim());
+      },
       text: signInString.tr,
     );
   }
