@@ -1,4 +1,5 @@
 import 'package:kel7/helpers/theme/custom_theme.dart';
+import 'package:kel7/screens/auth/forgot_password_screen.dart';
 import 'package:kel7/screens/auth/register_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
 import 'package:kel7/helpers/widgets/my_button.dart';
@@ -7,7 +8,7 @@ import 'package:kel7/helpers/widgets/my_spacing.dart';
 import 'package:kel7/helpers/widgets/my_text.dart';
 import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:kel7/screens/features/home_screen.dart';
+import 'package:kel7/screens/features/app_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -101,11 +102,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: _passwordVisible!,
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 16),
-                            alignment: Alignment.centerRight,
-                            child: MyText.bodyMedium("Forgot Password?",
-                                fontWeight: 500),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ForgotPasswordScreen()));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 16),
+                              alignment: Alignment.centerRight,
+                              child: MyText.bodyMedium("Lupa Password?",
+                                  fontWeight: 500),
+                            ),
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
@@ -122,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   visualDensity: VisualDensity.compact,
                                 ),
                                 MyText(
-                                  "Remember me",
+                                  "Ingatkan saya",
                                 )
                               ],
                             ),
@@ -137,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                                          builder: (context) => AppScreen()));
                                 },
                                 child: MyText.labelMedium("LOGIN",
                                     fontWeight: 600,
@@ -147,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 16),
                             child: Center(
-                              child: MyText.bodyMedium("OR", fontWeight: 500),
+                              child: MyText.bodyMedium("ATAU", fontWeight: 500),
                             ),
                           ),
                           MyButton.block(
@@ -158,12 +168,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
+                                        builder: (context) => AppScreen()));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                  MyText.bodyLarge("Login with Google",
+                                  MyText.bodyLarge("Login menggunakan Google",
                                       fontWeight: 600,
                                       color: theme.colorScheme.onPrimary,
                                       letterSpacing: 0.3),
@@ -188,10 +198,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: RichText(
                       text: TextSpan(children: <TextSpan>[
                         TextSpan(
-                            text: "Don't have an Account? ",
+                            text: "Belum punya akun? ",
                             style: MyTextStyle.bodyMedium(fontWeight: 500)),
                         TextSpan(
-                            text: " Register",
+                            text: " Registrasi",
                             style: MyTextStyle.bodyMedium(
                                 fontWeight: 600,
                                 color: theme.colorScheme.primary)),

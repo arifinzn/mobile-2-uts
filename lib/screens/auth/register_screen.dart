@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(top: 8),
-                      child: MyText.titleLarge("REGISTER", fontWeight: 600),
+                      child: MyText.titleLarge("REGISTRASI", fontWeight: 600),
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 16, right: 16, top: 8),
@@ -67,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: theme.colorScheme.onBackground,
                                   fontWeight: 500),
                               decoration: InputDecoration(
-                                hintText: "Name",
+                                hintText: "Nama",
                                 hintStyle: MyTextStyle.bodyLarge(
                                     color: theme.colorScheme.onBackground,
                                     fontWeight: 500),
@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: theme.colorScheme.onBackground,
                                   fontWeight: 500),
                               decoration: InputDecoration(
-                                hintText: "Number",
+                                hintText: "No Telepon",
                                 hintStyle: MyTextStyle.bodyLarge(
                                     color: theme.colorScheme.onBackground,
                                     fontWeight: 500),
@@ -141,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   borderRadiusAll: 4,
                                   onPressed: () {},
                                   padding: MySpacing.xy(20, 20),
-                                  child: MyText.labelMedium("REGISTER",
+                                  child: MyText.labelMedium("REGISTRASI",
                                       fontWeight: 600,
                                       color: theme.colorScheme.onPrimary))),
                         ],
@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: RichText(
                     text: TextSpan(children: <TextSpan>[
                       TextSpan(
-                          text: "I've already an Account? ",
+                          text: "Sudah punya akun? ",
                           style: MyTextStyle.bodyMedium(fontWeight: 500)),
                       TextSpan(
                           text: " Login",
