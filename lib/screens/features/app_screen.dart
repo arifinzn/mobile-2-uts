@@ -1,3 +1,4 @@
+import 'package:kel7/screens/features/about_screen.dart';
 import 'package:kel7/screens/features/activity_screen.dart';
 import 'package:kel7/screens/features/home_screen.dart';
 import 'package:kel7/screens/features/search_screen.dart';
@@ -34,7 +35,7 @@ class _AppScreenState extends State<AppScreen>
   void initState() {
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 5, vsync: this, initialIndex: 0);
     _tabController!.addListener(_handleTabSelection);
     _tabController!.animation!.addListener(() {
       final aniValue = _tabController!.animation!.value;
@@ -182,6 +183,30 @@ class _AppScreenState extends State<AppScreen>
                                   LucideIcons.user,
                                   color: theme.colorScheme.onBackground,
                                 )),
+                      Container(
+                          child: (_currentIndex == 4)
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Icon(
+                                      LucideIcons.album,
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(top: 4),
+                                      decoration: BoxDecoration(
+                                          color: theme.primaryColor,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(2.5))),
+                                      height: 5,
+                                      width: 5,
+                                    )
+                                  ],
+                                )
+                              : Icon(
+                                  LucideIcons.album,
+                                  color: theme.colorScheme.onBackground,
+                                )),
                     ],
                   ),
                 )),
@@ -191,7 +216,8 @@ class _AppScreenState extends State<AppScreen>
                 HomeScreen(),
                 SearchScreen(),
                 ActivityScreen(),
-                SettingScreen()
+                SettingScreen(),
+                AboutScreen()
               ],
             ),
           ),
