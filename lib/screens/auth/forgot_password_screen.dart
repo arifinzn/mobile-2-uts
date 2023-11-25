@@ -48,7 +48,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Container(
                       margin: EdgeInsets.only(bottom: 24, top: 8),
                       child:
-                          MyText.titleLarge("FORGOT PASSWORD", fontWeight: 600),
+                          MyText.titleLarge("LUPA PASSWORD", fontWeight: 600),
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 16, right: 16),
