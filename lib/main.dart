@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kel7/helpers/localizations/app_localization_delegate.dart';
 import 'package:kel7/helpers/localizations/language.dart';
 import 'package:kel7/helpers/theme/app_notifier.dart';
 import 'package:kel7/screens/auth/login_screen.dart';
+import 'package:kel7/repositories/user_repository.dart';
+import 'package:kel7/bloc/user_bloc.dart';
+import 'package:kel7/screens/features/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
 
@@ -31,7 +35,24 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: LoginScreen(),
+        // home: LoginScreen(),
+        home: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (context) => UserRepository(),
+            ), // RepositoryProvider,
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    UserBloc(userRepository: context.read<UserRepository>())
+                      ..add(const InitUser()),
+              ), // BlocProvider
+            ],
+            child: MainScreen(),
+          ), // MultiBlocProvider ), // MultiRepositoryProvider
+        ),
         builder: (context, child) {
           return Directionality(
             textDirection: AppTheme.textDirection,

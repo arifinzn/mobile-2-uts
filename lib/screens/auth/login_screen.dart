@@ -1,3 +1,4 @@
+import 'package:kel7/bloc/user_bloc.dart';
 import 'package:kel7/helpers/theme/custom_theme.dart';
 import 'package:kel7/screens/auth/forgot_password_screen.dart';
 import 'package:kel7/screens/auth/register_screen.dart';
@@ -10,6 +11,7 @@ import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:kel7/screens/features/app_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,6 +19,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _emailController = TextEditingController(text: "");
+  TextEditingController _passwordController = TextEditingController(text: "");
+
   bool? _passwordVisible = false, _check = false;
   late CustomTheme customTheme;
   late ThemeData theme;
@@ -61,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            controller: _emailController,
                             style: MyTextStyle.bodyLarge(
                                 letterSpacing: 0.1,
                                 color: theme.colorScheme.onBackground,
@@ -77,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             margin: EdgeInsets.only(top: 16),
                             child: TextFormField(
+                              controller: _passwordController,
                               style: MyTextStyle.bodyLarge(
                                   letterSpacing: 0.1,
                                   color: theme.colorScheme.onBackground,
@@ -144,41 +151,46 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadiusAll: 4,
                                 padding: MySpacing.y(20),
                                 onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AppScreen()));
+                                  // Navigator.pushReplacement(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => AppScreen()));
+                                  final email = _emailController.text;
+                                  final password = _passwordController.text;
+// Dispatch login event to Bloc
+                                  context.read<UserBloc>().add(ProsesLogin(
+                                      email: email, password: password));
                                 },
                                 child: MyText.labelMedium("LOGIN",
                                     fontWeight: 600,
                                     color: theme.colorScheme.onPrimary,
                                     letterSpacing: 0.5)),
                           ),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 16),
-                            child: Center(
-                              child: MyText.bodyMedium("ATAU", fontWeight: 500),
-                            ),
-                          ),
-                          MyButton.block(
-                              elevation: 0,
-                              borderRadiusAll: 4,
-                              padding: MySpacing.y(20),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AppScreen()));
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  MyText.bodyLarge("Login menggunakan Google",
-                                      fontWeight: 600,
-                                      color: theme.colorScheme.onPrimary,
-                                      letterSpacing: 0.3),
-                                ],
-                              )),
+                          // Container(
+                          //   margin: EdgeInsets.symmetric(vertical: 16),
+                          //   child: Center(
+                          //     child: MyText.bodyMedium("ATAU", fontWeight: 500),
+                          //   ),
+                          // ),
+                          // MyButton.block(
+                          //     elevation: 0,
+                          //     borderRadiusAll: 4,
+                          //     padding: MySpacing.y(20),
+                          //     onPressed: () {
+                          //       Navigator.pushReplacement(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) => AppScreen()));
+                          //     },
+                          //     child: Row(
+                          //       mainAxisSize: MainAxisSize.min,
+                          //       children: <Widget>[
+                          //         MyText.bodyLarge("Login menggunakan Google",
+                          //             fontWeight: 600,
+                          //             color: theme.colorScheme.onPrimary,
+                          //             letterSpacing: 0.3),
+                          //       ],
+                          //     )),
                         ],
                       ),
                     )
