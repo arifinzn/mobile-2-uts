@@ -49,7 +49,7 @@ class _StatusScreenState extends State<StatusScreen> {
 
   final List<String> _simpleChoice = [
     "Tambah baru",
-    "Cari saya",
+    "Lihat Teman",
     "Kontak",
     "Pengaturan"
   ];

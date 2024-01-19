@@ -174,7 +174,7 @@ class _AppScreenState extends State<AppScreen>
                                 ],
                               )
                             : Icon(
-                                LucideIcons.lineChart,
+                                LucideIcons.plusCircle,
                                 color: theme.colorScheme.onBackground,
                               )),
                     Container(
