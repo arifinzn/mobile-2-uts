@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kel7/bloc/login_bloc.dart';
+import 'package:kel7/bloc/post_bloc.dart';
 import 'package:kel7/bloc/register_bloc.dart';
 import 'package:kel7/bloc/user_bloc.dart';
 import 'package:kel7/helpers/utils/app_routes.dart';
+import 'package:kel7/repositories/post_repository.dart';
 import 'package:kel7/repositories/user_repository.dart';
 import 'package:kel7/screens/auth/login_screen.dart';
 import 'package:kel7/screens/auth/register_screen.dart';
@@ -13,11 +15,13 @@ class RouteGenerator {
   final RouteSettings routeSettings;
   final LoginBloc loginBloc;
   final UserRepository userRepo;
+  final PostRepository postRepo;
 
   RouteGenerator(
     this.routeSettings, {
     required this.loginBloc,
     required this.userRepo,
+    required this.postRepo,
   });
 
   Route<dynamic>? generate() {
@@ -51,6 +55,9 @@ class RouteGenerator {
               ),
               BlocProvider<LoginBloc>(
                 create: (_) => LoginBloc(userRepository: userRepo),
+              ),
+              BlocProvider<PostBloc>(
+                create: (_) => PostBloc(postRepository: postRepo),
               ),
             ],
             child: AppScreen(),

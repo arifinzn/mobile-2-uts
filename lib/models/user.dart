@@ -6,6 +6,7 @@ class User extends Equatable {
   final String? name;
   final String? email;
   final String? phone;
+  final String? photo;
 
   const User(
     this.id,
@@ -13,6 +14,7 @@ class User extends Equatable {
     this.name,
     this.email,
     this.phone,
+    this.photo,
   );
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class User extends Equatable {
     data['name'] = name;
     data['email'] = email;
     data['phone'] = phone;
+    data['photo'] = photo;
 
     return data;
   }
@@ -33,9 +36,10 @@ class User extends Equatable {
       data['name'] as String?,
       data['email'] as String?,
       data['phone'] as String?,
+      data['photo'] as String?,
     );
   }
 
   @override
-  List<Object?> get props => [id, npm, name, email, phone];
+  List<Object?> get props => [id, npm, name, email, phone, photo];
 }

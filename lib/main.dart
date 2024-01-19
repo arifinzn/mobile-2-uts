@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kel7/helpers/localizations/language.dart';
 import 'package:kel7/helpers/theme/app_notifier.dart';
 import 'package:kel7/helpers/utils/route_generator.dart';
+import 'package:kel7/repositories/post_repository.dart';
 import 'package:kel7/screens/auth/login_screen.dart';
 import 'package:kel7/repositories/user_repository.dart';
 import 'package:kel7/bloc/login_bloc.dart';
 import 'package:kel7/bloc/register_bloc.dart';
-import 'package:kel7/screens/features/main_screen.dart';
 import 'package:kel7/screens/features/splash_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
 import 'package:kel7/helpers/utils/navigation_service.dart';
@@ -28,6 +28,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   final UserRepository userRepository = locator<UserRepository>();
+  final PostRepository postRepository = locator<PostRepository>();
   final LoginBloc loginBloc = LoginBloc(userRepository: userRepository);
 
   // runApp(ChangeNotifierProvider<AppNotifier>(
@@ -48,6 +49,7 @@ Future<void> main() async {
       child: MyApp(
         loginBloc: loginBloc,
         userRepository: userRepository,
+        postRepository: postRepository,
         // initScreen: initScreen,
       ),
     ),
@@ -57,11 +59,13 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   final LoginBloc loginBloc;
   final UserRepository userRepository;
+  final PostRepository postRepository;
 
   const MyApp({
     super.key,
     required this.loginBloc,
     required this.userRepository,
+    required this.postRepository,
   });
 
   @override
@@ -121,6 +125,7 @@ class MyApp extends StatelessWidget {
         routeSettings,
         loginBloc: loginBloc,
         userRepo: userRepository,
+        postRepo: postRepository,
       ).generate(),
     );
   }

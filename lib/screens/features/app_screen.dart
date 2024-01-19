@@ -8,6 +8,7 @@ import 'package:kel7/models/loading.dart';
 import 'package:kel7/screens/features/about_screen.dart';
 import 'package:kel7/screens/features/activity_screen.dart';
 import 'package:kel7/screens/features/home_screen.dart';
+import 'package:kel7/screens/features/new_post_screen.dart';
 import 'package:kel7/screens/features/search_screen.dart';
 import 'package:kel7/screens/features/setting_screen.dart';
 import 'package:kel7/helpers/theme/app_notifier.dart';
@@ -159,7 +160,7 @@ class _AppScreenState extends State<AppScreen>
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Icon(
-                                    LucideIcons.lineChart,
+                                    LucideIcons.plusCircle,
                                     color: theme.colorScheme.primary,
                                   ),
                                   Container(
@@ -233,7 +234,7 @@ class _AppScreenState extends State<AppScreen>
             children: <Widget>[
               HomeScreen(),
               SearchScreen(),
-              ActivityScreen(),
+              NewPostScreen(),
               SettingScreen(),
               AboutScreen()
             ],

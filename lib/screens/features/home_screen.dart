@@ -1,3 +1,5 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kel7/bloc/post_bloc.dart';
 import 'package:kel7/screens/features/profile_screen.dart';
 import 'package:kel7/screens/features/status_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
@@ -8,6 +10,7 @@ import 'package:kel7/helpers/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:kel7/screens/features/post_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:kel7/helpers/utils/time_ago.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,12 +20,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late CustomTheme customTheme;
   late ThemeData theme;
+  late PostBloc _postBloc;
 
   @override
   void initState() {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+    _postBloc = context.read<PostBloc>();
+    _postBloc.add(PostList());
+  }
+
+  @override
+  void dispose() {
+    // _postBloc.close();
+    super.dispose();
   }
 
   final List<String> _simpleChoice = [
@@ -37,128 +49,183 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-      padding:
-          MySpacing.fromLTRB(0, MySpacing.safeAreaTop(context) + 20, 0, 16),
-      children: [
-        SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Container(
-                margin: MySpacing.fromLTRB(16, 0, 6, 0),
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(26)),
-                      child: Image(
-                        image: AssetImage('./assets/profiles/avatar_5.jpg'),
-                        height: 52,
-                        width: 52,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: -1,
-                      right: -1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: customTheme.card, width: 1.4),
-                            shape: BoxShape.circle),
-                        child: Container(
-                          padding: MySpacing.all(2),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: theme.colorScheme.primary,
-                          ),
-                          child: Icon(
-                            LucideIcons.plus,
-                            size: 12,
-                            color: theme.colorScheme.onPrimary,
-                          ),
+        body: RefreshIndicator(
+            onRefresh: () async {
+              _postBloc.add(PostList());
+            },
+            child: ListView(
+              padding: MySpacing.fromLTRB(
+                  0, MySpacing.safeAreaTop(context) + 20, 0, 16),
+              children: [
+                SingleChildScrollView(
+                  physics: ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: MySpacing.fromLTRB(16, 0, 6, 0),
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(26)),
+                              child: Image(
+                                image: AssetImage(
+                                    './assets/profiles/avatar_5.jpg'),
+                                height: 52,
+                                width: 52,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              bottom: -1,
+                              right: -1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: customTheme.card, width: 1.4),
+                                    shape: BoxShape.circle),
+                                child: Container(
+                                  padding: MySpacing.all(2),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: theme.colorScheme.primary,
+                                  ),
+                                  child: Icon(
+                                    LucideIcons.plus,
+                                    size: 12,
+                                    color: theme.colorScheme.onPrimary,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                    )
-                  ],
+                      statusWidget(
+                          image: './assets/profiles/avatar_4.jpg',
+                          type: 2,
+                          isLive: true),
+                      statusWidget(
+                          image: './assets/profiles/avatar_2.png', type: 1),
+                      statusWidget(
+                          image: './assets/profiles/avatar_1.png', type: 1),
+                      statusWidget(
+                          image: './assets/profiles/avatar_3.jpg', type: 2),
+                      statusWidget(
+                          image: './assets/profiles/avatar_4.jpg',
+                          type: 2,
+                          isMuted: true),
+                      statusWidget(
+                          image: './assets/profiles/avatar.png',
+                          type: 2,
+                          isMuted: true),
+                    ],
+                  ),
                 ),
-              ),
-              statusWidget(
-                  image: './assets/profiles/avatar_4.jpg',
-                  type: 2,
-                  isLive: true),
-              statusWidget(image: './assets/profiles/avatar_2.png', type: 1),
-              statusWidget(image: './assets/profiles/avatar_1.png', type: 1),
-              statusWidget(image: './assets/profiles/avatar_3.jpg', type: 2),
-              statusWidget(
-                  image: './assets/profiles/avatar_4.jpg',
-                  type: 2,
-                  isMuted: true),
-              statusWidget(
-                  image: './assets/profiles/avatar.png',
-                  type: 2,
-                  isMuted: true),
-            ],
-          ),
-        ),
-        Container(
-          margin: MySpacing.top(8),
-          child: Divider(
-            height: 0,
-          ),
-        ),
-        Column(
-          children: [
-            postWidget(
-                profileImage: './assets/profiles/avatar_1.png',
-                name: "Suci Nur Fa’iqoh",
-                status: "Purwakarta, Jawa Barat",
-                postImage: 'assets/profiles/profile_banner.jpg',
-                likes: "21 Menyukai",
-                time: '12 min'),
-            Divider(
-              height: 0,
-            ),
-            postWidget(
-                profileImage: './assets/google.png',
-                name: "Google",
-                status: "Sponsored",
-                postImage: './assets/posts/google-posts.jpg',
-                likes: "Anda dan 7jt yang lainnya menyukai ini",
-                time: 'Kemarin'),
-            Divider(
-              height: 0,
-            ),
-            postWidget(
-                profileImage: './assets/profiles/avatar_2.png',
-                name: "Rais Maududy",
-                status: "Bandung, Jawa Barat",
-                postImage: './assets/posts/post-l1.jpg',
-                likes: "Anda dan 98 yang lainnya menyukai ini",
-                time: 'Kemarin'),
-            Divider(
-              height: 0,
-            ),
-          ],
-        ),
-        Container(
-          padding: EdgeInsets.only(
-            top: 16,
-          ),
-          child: Center(
-            child: SizedBox(
-              width: 16,
-              height: 16,
-              child: CircularProgressIndicator(
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
-                  strokeWidth: 1.4),
-            ),
-          ),
-        )
-      ],
-    ));
+                Container(
+                  margin: MySpacing.top(8),
+                  child: Divider(
+                    height: 0,
+                  ),
+                ),
+
+                BlocBuilder<PostBloc, PostState>(
+                    // bloc: context
+                    //     .read<PostBloc>(), // provide the local bloc instance
+                    builder: (context, state) {
+                  if (state is PostLoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is PostloadedState) {
+                    List<Widget> postList = <Widget>[];
+                    for (var i = 0; i < state.postList.length; i++) {
+                      postList.add(
+                        postWidget(
+                            profileImage: state.postList[i].user!.photo!,
+                            name: state.postList[i].user!.name!,
+                            status: state.postList[i].location!,
+                            postImage: state.postList[i].img!,
+                            likes: "${state.postList[i].likes!}21 Menyukai",
+                            time: timeAgo
+                                .stringTimeToTimeago(state.postList[i].time!)),
+                      );
+                    }
+                    return Column(children: postList);
+                    // return Column(children: [
+                    //   ListView.builder(
+                    //     itemCount: state.postList.length,
+                    //     // padding: const EdgeInsets.symmetric(vertical: 15),
+                    //     itemBuilder: (ctx, idx) => Text('state.postList[idx].desc!'),
+                    //     // postWidget(
+                    //     //     profileImage: './assets/profiles/avatar_1.png',
+                    //     //     name: "Suci Nur Fa’iqoh",
+                    //     //     status: "Purwakarta, Jawa Barat",
+                    //     //     postImage: 'assets/profiles/profile_banner.jpg',
+                    //     //     likes: "21 Menyukai",
+                    //     //     time: '12 min'),
+                    //   )
+                    // ]);
+                  } else if (state is InternetConnectionFailedState) {
+                    return Container();
+                  } else {
+                    return const Center(
+                      child: Text("Failed to get data"),
+                    );
+                  }
+                }),
+                // Column(
+                //   children: [
+                //     postWidget(
+                //         profileImage: './assets/profiles/avatar_1.png',
+                //         name: "Suci Nur Fa’iqoh",
+                //         status: "Purwakarta, Jawa Barat",
+                //         postImage: 'assets/profiles/profile_banner.jpg',
+                //         likes: "21 Menyukai",
+                //         time: '12 min'),
+                //     Divider(
+                //       height: 0,
+                //     ),
+                //     postWidget(
+                //         profileImage: './assets/google.png',
+                //         name: "Google",
+                //         status: "Sponsored",
+                //         postImage: './assets/posts/google-posts.jpg',
+                //         likes: "Anda dan 7jt yang lainnya menyukai ini",
+                //         time: 'Kemarin'),
+                //     Divider(
+                //       height: 0,
+                //     ),
+                //     postWidget(
+                //         profileImage: './assets/profiles/avatar_2.png',
+                //         name: "Rais Maududy",
+                //         status: "Bandung, Jawa Barat",
+                //         postImage: './assets/posts/post-l1.jpg',
+                //         likes: "Anda dan 98 yang lainnya menyukai ini",
+                //         time: 'Kemarin'),
+                //     Divider(
+                //       height: 0,
+                //     ),
+                //   ],
+                // ),
+                Container(
+                  padding: EdgeInsets.only(
+                    top: 16,
+                  ),
+                  child: Center(
+                    child: SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              theme.colorScheme.primary),
+                          strokeWidth: 1.4),
+                    ),
+                  ),
+                )
+              ],
+            )));
   }
 
   Widget statusWidget(
@@ -245,8 +312,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
-                        child: Image(
-                          image: AssetImage(profileImage),
+                        child: Image.network(
+                          profileImage,
                           width: 32,
                           height: 32,
                         )),
@@ -280,10 +347,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Container(
               margin: MySpacing.top(12),
-              child: Image(
-                image: AssetImage(
-                  postImage,
-                ),
+              child: Image.network(
+                postImage,
                 height: 240,
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover,
