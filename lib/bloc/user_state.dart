@@ -3,16 +3,25 @@ part of 'user_bloc.dart';
 @immutable
 class UserState {}
 
-class LoginInitial extends UserState {}
+class UserInitial extends UserState {}
 
-class LoginLoading extends UserState {}
+class UserData extends UserState {
+  final User data;
 
-class LoginSuccess extends UserState {
-  final String sessionToken;
-  LoginSuccess({required this.sessionToken});
+  UserData(this.data);
+
+  @override
+  String toString() => 'UserLoaded';
 }
 
-class LoginFailure extends UserState {
+class UserLoading extends UserState {}
+
+class UserSuccess extends UserState {
+  final String sessionToken;
+  UserSuccess({required this.sessionToken});
+}
+
+class UserFailure extends UserState {
   final String error;
-  LoginFailure({required this.error});
+  UserFailure({required this.error});
 }

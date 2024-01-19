@@ -141,6 +141,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.5"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      sha256: "529de303c739fca98cd7ece5fca500d8ff89649f1bb4b4e94fb20954abcd7468"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -310,7 +318,7 @@ packages:
     source: hosted
     version: "2.1.6"
   provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: provider
       sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"

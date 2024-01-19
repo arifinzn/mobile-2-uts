@@ -30,4 +30,19 @@ class Repository {
     }
     return false;
   }
+
+  Future<Map<String, dynamic>> getData({required String key}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String prefsRead = prefs.getString(key) ?? "";
+
+    Map<String, dynamic>? result;
+
+    if (prefsRead != null) {
+      result = json.decode(prefsRead);
+    } else {
+      result = {};
+    }
+
+    return result!;
+  }
 }

@@ -1,26 +1,26 @@
-part of 'user_bloc.dart';
+part of 'register_bloc.dart';
 
 // @immutable
-class UserEvent extends Equatable {
-  const UserEvent();
+class RegisterEvent extends Equatable {
+  const RegisterEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class InitUser extends UserEvent {
-  const InitUser();
+class InitRegister extends RegisterEvent {
+  const InitRegister();
   @override
   List<Object> get props => [];
 }
 
-class ProsesUser extends UserEvent {
+class ProsesRegister extends RegisterEvent {
   final String npm;
   final String name;
   final String email;
   final String phone;
   final String password;
-  const ProsesUser(
+  const ProsesRegister(
       {this.npm = "",
       this.name = "",
       this.email = "",

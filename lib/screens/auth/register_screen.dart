@@ -1,9 +1,11 @@
-/*
-* File : Register
-* Version : 1.0.0
-* */
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kel7/bloc/register_bloc.dart';
 import 'package:kel7/helpers/theme/custom_theme.dart';
+import 'package:kel7/helpers/utils/app_routes.dart';
+import 'package:kel7/helpers/utils/locator.dart';
+import 'package:kel7/helpers/utils/navigation_service.dart';
+import 'package:kel7/helpers/widgets/loading_dialog.dart';
+import 'package:kel7/models/loading.dart';
 import 'package:kel7/screens/auth/login_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
 import 'package:kel7/helpers/widgets/my_button.dart';
@@ -12,6 +14,7 @@ import 'package:kel7/helpers/widgets/my_spacing.dart';
 import 'package:kel7/helpers/widgets/my_text.dart';
 import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:kel7/screens/features/app_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -20,7 +23,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  bool _passwordVisible = false;
+  late RegisterBloc _registerBloc;
+  final _navService = locator<NavigationService>();
+
+  TextEditingController _npmController = TextEditingController(text: "");
+  TextEditingController _nameController = TextEditingController(text: "");
+  TextEditingController _emailController = TextEditingController(text: "");
+  TextEditingController _phoneController = TextEditingController(text: "");
+  TextEditingController _passwordController = TextEditingController(text: "");
+  TextEditingController _passwordConfirmController =
+      TextEditingController(text: "");
+
+  bool _passwordUnvisible = true;
+  bool _passwordConfirmUnvisible = true;
   late CustomTheme customTheme;
   late ThemeData theme;
 
@@ -29,166 +44,261 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     customTheme = AppTheme.customTheme;
     theme = AppTheme.theme;
+    _registerBloc = context.read<RegisterBloc>();
+  }
+
+  @override
+  void dispose() {
+    _registerBloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        ClipPath(
-            clipper: _MyCustomClipper(context),
-            child: Container(
-              alignment: Alignment.center,
-              color: theme.colorScheme.background,
-            )),
-        Positioned(
-          left: 30,
-          right: 30,
-          top: MediaQuery.of(context).size.height * 0.15,
-          child: Column(
-            children: <Widget>[
-              MyContainer.bordered(
-                color: theme.scaffoldBackgroundColor,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 8),
-                      child: MyText.titleLarge("REGISTRASI", fontWeight: 600),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 16, right: 16, top: 8),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(top: 16),
-                            child: TextFormField(
-                              style: MyTextStyle.bodyLarge(
-                                  color: theme.colorScheme.onBackground,
-                                  fontWeight: 500),
-                              decoration: InputDecoration(
-                                hintText: "Nama",
-                                hintStyle: MyTextStyle.bodyLarge(
-                                    color: theme.colorScheme.onBackground,
-                                    fontWeight: 500),
-                                prefixIcon: Icon(LucideIcons.user),
-                              ),
-                              textCapitalization: TextCapitalization.sentences,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 16),
-                            child: TextFormField(
-                              style: MyTextStyle.bodyLarge(
-                                  color: theme.colorScheme.onBackground,
-                                  fontWeight: 500),
-                              decoration: InputDecoration(
-                                hintText: "Email",
-                                hintStyle: MyTextStyle.bodyLarge(
-                                    color: theme.colorScheme.onBackground,
-                                    fontWeight: 500),
-                                prefixIcon: Icon(LucideIcons.mail),
-                              ),
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 16),
-                            child: TextFormField(
-                              style: MyTextStyle.bodyLarge(
-                                  color: theme.colorScheme.onBackground,
-                                  fontWeight: 500),
-                              decoration: InputDecoration(
-                                hintText: "No Telepon",
-                                hintStyle: MyTextStyle.bodyLarge(
-                                    color: theme.colorScheme.onBackground,
-                                    fontWeight: 500),
-                                prefixIcon: Icon(LucideIcons.phone),
-                              ),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 16),
-                            child: TextFormField(
-                              style: MyTextStyle.bodyLarge(
-                                  color: theme.colorScheme.onBackground,
-                                  fontWeight: 500),
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                hintStyle: MyTextStyle.bodyLarge(
-                                    color: theme.colorScheme.onBackground,
-                                    fontWeight: 500),
-                                prefixIcon: Icon(LucideIcons.lock),
-                                suffixIcon: IconButton(
-                                  icon: Icon(_passwordVisible
-                                      ? LucideIcons.eye
-                                      : LucideIcons.eyeOff),
-                                  onPressed: () {
-                                    setState(() {
-                                      _passwordVisible = !_passwordVisible;
-                                    });
-                                  },
-                                ),
-                              ),
-                              obscureText: _passwordVisible,
-                            ),
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(top: 24),
-                              child: MyButton(
-                                  elevation: 0,
-                                  borderRadiusAll: 4,
-                                  onPressed: () {},
-                                  padding: MySpacing.xy(20, 20),
-                                  child: MyText.labelMedium("REGISTRASI",
-                                      fontWeight: 600,
-                                      color: theme.colorScheme.onPrimary))),
-                        ],
+    return BlocConsumer<RegisterBloc, RegisterState>(listener: (_, state) {
+      if (state is RegisterLoading) {
+        // LoadingDialog.show(context, state.loading);
+      } else if (state is RegisterSuccess) {
+        Loading loading =
+            Loading(LoadingStatus.success, 'Registrasi Berhasil', '');
+        LoadingDialog.show(
+          context,
+          loading,
+          onDone: () => _navService.pushTo(AppRoutes.home),
+        );
+      } else if (state is RegisterFailure) {
+        Loading loading = Loading(LoadingStatus.failed, state.error, '');
+        LoadingDialog.show(
+          context,
+          loading,
+          onDone: () => _navService.pushTo(AppRoutes.register),
+        );
+      }
+    }, builder: (_, state) {
+      return Scaffold(
+          body: Stack(
+        children: <Widget>[
+          ClipPath(
+              clipper: _MyCustomClipper(context),
+              child: Container(
+                alignment: Alignment.center,
+                color: theme.colorScheme.background,
+              )),
+          Positioned(
+            left: 30,
+            right: 30,
+            top: MediaQuery.of(context).size.height * 0.15,
+            child: Column(
+              children: <Widget>[
+                MyContainer.bordered(
+                  color: theme.scaffoldBackgroundColor,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 8),
+                        child: MyText.titleLarge("REGISTRASI", fontWeight: 600),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                },
-                child: Container(
-                  padding: EdgeInsets.only(top: 16, bottom: 8),
-                  child: RichText(
-                    text: TextSpan(children: <TextSpan>[
-                      TextSpan(
-                          text: "Sudah punya akun? ",
-                          style: MyTextStyle.bodyMedium(fontWeight: 500)),
-                      TextSpan(
-                          text: " Login",
-                          style: MyTextStyle.bodyMedium(
-                              fontWeight: 600,
-                              color: theme.colorScheme.primary)),
-                    ]),
+                      Container(
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 8),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                style: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                controller: _npmController,
+                                decoration: InputDecoration(
+                                  hintText: "NPM",
+                                  hintStyle: MyTextStyle.bodyLarge(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: 500),
+                                  prefixIcon: Icon(LucideIcons.user),
+                                ),
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                style: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                  hintText: "Nama",
+                                  hintStyle: MyTextStyle.bodyLarge(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: 500),
+                                  prefixIcon: Icon(LucideIcons.user),
+                                ),
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                style: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                  hintText: "Email",
+                                  hintStyle: MyTextStyle.bodyLarge(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: 500),
+                                  prefixIcon: Icon(LucideIcons.mail),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                style: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                controller: _phoneController,
+                                decoration: InputDecoration(
+                                  hintText: "No Telepon",
+                                  hintStyle: MyTextStyle.bodyLarge(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: 500),
+                                  prefixIcon: Icon(LucideIcons.phone),
+                                ),
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                style: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                  hintText: "Password",
+                                  hintStyle: MyTextStyle.bodyLarge(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: 500),
+                                  prefixIcon: Icon(LucideIcons.lock),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(_passwordUnvisible
+                                        ? LucideIcons.eye
+                                        : LucideIcons.eyeOff),
+                                    onPressed: () {
+                                      setState(() {
+                                        _passwordUnvisible =
+                                            !_passwordUnvisible;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                obscureText: _passwordUnvisible,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 16),
+                              child: TextFormField(
+                                style: MyTextStyle.bodyLarge(
+                                    color: theme.colorScheme.onBackground,
+                                    fontWeight: 500),
+                                controller: _passwordConfirmController,
+                                decoration: InputDecoration(
+                                  hintText: "Konfirmasi Password",
+                                  hintStyle: MyTextStyle.bodyLarge(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: 500),
+                                  prefixIcon: Icon(LucideIcons.lock),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(_passwordConfirmUnvisible
+                                        ? LucideIcons.eye
+                                        : LucideIcons.eyeOff),
+                                    onPressed: () {
+                                      setState(() {
+                                        _passwordConfirmUnvisible =
+                                            !_passwordConfirmUnvisible;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                obscureText: _passwordConfirmUnvisible,
+                              ),
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(top: 24),
+                                child: MyButton(
+                                    elevation: 0,
+                                    borderRadiusAll: 4,
+                                    onPressed: () {
+                                      final email = _emailController.text;
+                                      final npm = _npmController.text;
+                                      final name = _nameController.text;
+                                      final phone = _phoneController.text;
+                                      final password = _passwordController.text;
+// Dispatch login event to Bloc
+
+                                      _registerBloc.add(ProsesRegister(
+                                          npm: npm,
+                                          name: name,
+                                          email: email,
+                                          phone: phone,
+                                          password: password));
+                                    },
+                                    padding: MySpacing.xy(20, 20),
+                                    child: MyText.labelMedium("REGISTRASI",
+                                        fontWeight: 600,
+                                        color: theme.colorScheme.onPrimary))),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-        Positioned(
-          top: MySpacing.safeAreaTop(context) + 12,
-          left: 16,
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              LucideIcons.chevronLeft,
-              color: theme.colorScheme.onBackground,
+                GestureDetector(
+                  onTap: () {
+                    _navService.navigateTo(
+                      AppRoutes.login,
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(top: 16, bottom: 8),
+                    child: RichText(
+                      text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                            text: "Sudah punya akun? ",
+                            style: MyTextStyle.bodyMedium(fontWeight: 500)),
+                        TextSpan(
+                            text: " Login",
+                            style: MyTextStyle.bodyMedium(
+                                fontWeight: 600,
+                                color: theme.colorScheme.primary)),
+                      ]),
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
-        )
-      ],
-    ));
+          Positioned(
+            top: MySpacing.safeAreaTop(context) + 12,
+            left: 16,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                LucideIcons.chevronLeft,
+                color: theme.colorScheme.onBackground,
+              ),
+            ),
+          )
+        ],
+      ));
+    });
   }
 }
 

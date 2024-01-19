@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:kel7/bloc/user_bloc.dart';
+import 'package:kel7/bloc/login_bloc.dart';
 
 class ErrorMessage extends StatelessWidget {
   final String? message;
@@ -17,7 +17,7 @@ class ErrorMessage extends StatelessWidget {
           Text('Error:${message!}'),
           ElevatedButton(
               onPressed: () {
-                context.read<UserBloc>().add(const InitUser());
+                context.read<LoginBloc>().add(const InitLogin());
               },
               child: const Text('Kembali Ke Login'))
         ],
