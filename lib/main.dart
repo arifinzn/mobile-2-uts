@@ -113,12 +113,12 @@ class MyApp extends StatelessWidget {
           child: child ?? Container(),
         );
       },
-      // localizationsDelegates: [
-      //   AppLocalizationsDelegate(context),
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
+      localizationsDelegates: const [
+        // AppLocalizationsDelegate(context),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       supportedLocales: Language.getLocales(), initialRoute: initRoute,
       navigatorKey: locator<NavigationService>().navigationKey,
       onGenerateRoute: (routeSettings) => RouteGenerator(
