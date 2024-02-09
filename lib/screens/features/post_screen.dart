@@ -1,12 +1,19 @@
+import 'dart:math';
+
 import 'package:kel7/helpers/theme/app_theme.dart';
 import 'package:kel7/helpers/utils/generator.dart';
 import 'package:kel7/helpers/widgets/my_spacing.dart';
 import 'package:kel7/helpers/widgets/my_text.dart';
 import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:kel7/models/post.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:kel7/helpers/utils/time_ago.dart';
 
 class PostScreen extends StatefulWidget {
+  final Post post;
+  const PostScreen({required this.post, super.key});
+
   @override
   _PostScreenState createState() => _PostScreenState();
 }
@@ -34,9 +41,9 @@ class _PostScreenState extends State<PostScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  child: Image(
-                    image: AssetImage('./assets/profiles/avatar_1.png'),
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  child: Image.network(
+                    widget.post.user!.photo!,
                     width: 32,
                     height: 32,
                   )),
@@ -45,9 +52,9 @@ class _PostScreenState extends State<PostScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MyText.bodySmall("Suci Nur Fa’iqoh",
+                    MyText.bodySmall(widget.post.user!.name!,
                         color: theme.colorScheme.onBackground, fontWeight: 600),
-                    MyText.bodySmall("Purwakarta, Jawa Barat",
+                    MyText.bodySmall(widget.post.location!,
                         fontSize: 12,
                         color: theme.colorScheme.onBackground,
                         muted: true,
@@ -59,7 +66,7 @@ class _PostScreenState extends State<PostScreen> {
                 child: Container(
                   alignment: Alignment.bottomRight,
                   child: MyText.bodySmall(
-                    "12 menit",
+                    timeAgo.stringTimeToTimeago(widget.post.time!),
                     color: theme.colorScheme.onBackground,
                   ),
                 ),
@@ -68,17 +75,14 @@ class _PostScreenState extends State<PostScreen> {
           ),
         ),
         Container(
-          margin: MySpacing.top(12),
-          child: Image(
-            image: AssetImage(
-              './assets/profiles/profile_banner.jpg',
-            ),
-            height: MediaQuery.of(context).size.height * 0.45,
-            fit: BoxFit.cover,
-          ),
-        ),
+            margin: MySpacing.top(12),
+            child: Image.network(
+              widget.post.img!,
+              height: MediaQuery.of(context).size.height * 0.45,
+              fit: BoxFit.cover,
+            )),
         Container(
-          margin: MySpacing.fromLTRB(24, 12, 24, 0),
+          margin: MySpacing.fromLTRB(10, 12, 10, 0),
           child: Row(
             children: [
               Icon(
@@ -103,7 +107,7 @@ class _PostScreenState extends State<PostScreen> {
               Expanded(
                 child: Container(
                   alignment: Alignment.bottomRight,
-                  child: MyText.bodySmall("7,327 dilihat",
+                  child: MyText.bodySmall("${Random().nextInt(100)} dilihat",
                       color: theme.colorScheme.onBackground, fontWeight: 600),
                 ),
               )
@@ -111,25 +115,30 @@ class _PostScreenState extends State<PostScreen> {
           ),
         ),
         Container(
-          margin: MySpacing.fromLTRB(24, 12, 24, 0),
+          margin: MySpacing.fromLTRB(10, 12, 10, 0),
+          child: MyText.bodyMedium(widget.post.desc!,
+              color: theme.colorScheme.onBackground),
+        ),
+        Container(
+          margin: MySpacing.fromLTRB(10, 12, 10, 0),
           child: MyText.bodySmall(
               Generator.getParagraphsText(
                   withEmoji: true,
                   paragraph: 2,
-                  words: 18,
+                  words: 25,
                   noOfNewLine: 1,
                   withHyphen: true),
               color: theme.colorScheme.onBackground),
         ),
         Container(
-          margin: MySpacing.fromLTRB(24, 8, 24, 0),
+          margin: MySpacing.fromLTRB(10, 8, 10, 0),
           child: MyText.bodySmall("Lihat semua 28 komentar",
               color: theme.colorScheme.onBackground,
               xMuted: true,
               letterSpacing: -0.2),
         ),
         Container(
-          margin: MySpacing.fromLTRB(24, 16, 24, 0),
+          margin: MySpacing.fromLTRB(10, 16, 10, 0),
           child: Row(
             children: [
               Expanded(
@@ -148,7 +157,7 @@ class _PostScreenState extends State<PostScreen> {
                           fontSize: 12),
                       filled: true,
                       hintText: "Komentar saya",
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),

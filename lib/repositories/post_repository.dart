@@ -12,16 +12,23 @@ import 'package:kel7/repositories/repository.dart';
 class PostRepository extends Repository {
   Repository? repo;
 
-  Future<List<Post>> postList() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String sessionToken = prefs.getString('session') ?? "";
+  Future<List<Post>> postList({String search = ""}) async {
+    //final SharedPreferences prefs = await SharedPreferences.getInstance();
+    //final String sessionToken = prefs.getString('session') ?? "";
 
     List<Post> list = [];
     try {
-      log('${AppConstants.baseUrl}/posts');
+      //log('${AppConstants.baseUrl}/posts');
       final Dio _dio = Dio();
 
-      final response = await _dio.get('${AppConstants.baseUrl}/posts');
+      final response;
+      if (search != "") {
+        response =
+            await _dio.get('${AppConstants.baseUrl}/posts?search=$search');
+      } else {
+        response = await _dio.get('${AppConstants.baseUrl}/posts');
+      }
+
       // log("res ${response.data}");
 
       if (response.statusCode == 200) {

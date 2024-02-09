@@ -43,8 +43,8 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (_) =>
-                LoginBloc(userRepository: userRepository)..add(InitLogin()))
+            create: (_) => LoginBloc(userRepository: userRepository)
+              ..add(const InitLogin()))
       ],
       child: MyApp(
         loginBloc: loginBloc,

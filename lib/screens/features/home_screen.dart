@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kel7/bloc/post_bloc.dart';
+import 'package:kel7/models/post.dart';
 import 'package:kel7/screens/features/profile_screen.dart';
 import 'package:kel7/screens/features/status_screen.dart';
 import 'package:kel7/helpers/theme/app_theme.dart';
@@ -143,13 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     for (var i = 0; i < state.postList.length; i++) {
                       postList.add(
                         postWidget(
-                            profileImage: state.postList[i].user!.photo!,
-                            name: state.postList[i].user!.name!,
-                            status: state.postList[i].location!,
-                            postImage: state.postList[i].img!,
-                            likes: "${state.postList[i].likes!}21 Menyukai",
-                            time: timeAgo
-                                .stringTimeToTimeago(state.postList[i].time!)),
+                          post: state.postList[i],
+                        ),
                       );
                     }
                     return Column(children: postList);
@@ -209,21 +205,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     ),
                 //   ],
                 // ),
-                Container(
-                  padding: EdgeInsets.only(
-                    top: 16,
-                  ),
-                  child: Center(
-                    child: SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              theme.colorScheme.primary),
-                          strokeWidth: 1.4),
-                    ),
-                  ),
-                )
+                // Container(
+                //   padding: EdgeInsets.only(
+                //     top: 16,
+                //   ),
+                //   child: Center(
+                //     child: SizedBox(
+                //       width: 16,
+                //       height: 16,
+                //       child: CircularProgressIndicator(
+                //           valueColor: AlwaysStoppedAnimation<Color>(
+                //               theme.colorScheme.primary),
+                //           strokeWidth: 1.4),
+                //     ),
+                //   ),
+                // )
               ],
             )));
   }
@@ -281,18 +277,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget postWidget(
-      {required String profileImage,
-      required String name,
-      required String status,
-      required String postImage,
-      required String likes,
-      String? comments,
-      required String time}) {
+  Widget postWidget({required Post post}) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PostScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => PostScreen(
+                      post: post,
+                    )));
       },
       child: Container(
         margin: MySpacing.fromLTRB(0, 12, 0, 16),
@@ -313,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
                         child: Image.network(
-                          profileImage,
+                          post.user!.photo!,
                           width: 32,
                           height: 32,
                         )),
@@ -323,10 +316,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        MyText.bodySmall(name,
+                        MyText.bodySmall(post.user!.name!,
                             color: theme.colorScheme.onBackground,
                             fontWeight: 600),
-                        MyText.bodySmall(status,
+                        MyText.bodySmall(post.location!,
                             fontSize: 12,
                             color: theme.colorScheme.onBackground,
                             muted: true,
@@ -338,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                         alignment: Alignment.bottomRight,
                         child: MyText.bodySmall(
-                          time,
+                          timeAgo.stringTimeToTimeago(post.time!),
                           color: theme.colorScheme.onBackground,
                         )),
                   )
@@ -348,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               margin: MySpacing.top(12),
               child: Image.network(
-                postImage,
+                post.img!,
                 height: 240,
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover,
@@ -371,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: 24),
                   Container(
                     margin: MySpacing.left(4),
-                    child: MyText.bodySmall(likes,
+                    child: MyText.bodySmall("${post.likes!}21 Menyukai",
                         letterSpacing: 0,
                         color: theme.colorScheme.onBackground),
                   ),

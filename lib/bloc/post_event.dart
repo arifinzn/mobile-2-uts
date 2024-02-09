@@ -14,7 +14,12 @@ class InitPost extends PostEvent {
   List<Object> get props => [];
 }
 
-class PostList extends PostEvent {}
+class PostList extends PostEvent {
+  final String search;
+  const PostList({this.search = ""});
+  @override
+  List<Object> get props => [search];
+}
 
 class AddPost extends PostEvent {
   final String desc;

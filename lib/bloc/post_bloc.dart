@@ -21,9 +21,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   _postList(PostList event, Emitter emit) async {
+    String search = event.search;
     Future.delayed(Duration(milliseconds: 1000), () {});
     List<Post> postList = <Post>[];
-    postList = await postRepository.postList();
+    postList = await postRepository.postList(search: search);
     emit(PostloadedState(postList: postList));
   }
 
