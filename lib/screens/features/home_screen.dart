@@ -248,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: type == 2 ? customTheme.border : Colors.red,
                         width: 1.6)),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(26)),
+                  borderRadius: const BorderRadius.all(Radius.circular(26)),
                   child: Image(
                     image: AssetImage(image),
                     height: 50,
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       right: 0,
                       child: Container(
                         padding: MySpacing.fromLTRB(4, 2, 4, 2),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: MyText.bodySmall("Live",
@@ -304,7 +304,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) => ProfileScreen()));
                     },
                     child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                         child: Image.network(
                           post.user!.photo!,
                           width: 32,
