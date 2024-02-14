@@ -53,7 +53,9 @@ class _NewPostScreenState extends State<NewPostScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<PostBloc, PostState>(listener: (_, state) {
       if (state is PostLoading) {
-        // LoadingDialog.show(context, state.loading);
+        Loading loading =
+            Loading(LoadingStatus.loading, 'Menambahkan Postingan', '');
+        LoadingDialog.show(context, loading);
       } else if (state is PostSuccess) {
         Loading loading =
             Loading(LoadingStatus.success, 'Posting Berhasil', '');

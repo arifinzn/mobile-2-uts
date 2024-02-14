@@ -16,6 +16,7 @@ import 'package:kel7/helpers/widgets/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:kel7/screens/features/app_screen.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -229,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 24),
+                                margin: const EdgeInsets.only(top: 24),
                                 child: MyButton(
                                     elevation: 0,
                                     borderRadiusAll: 4,
@@ -239,14 +240,77 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       final name = _nameController.text;
                                       final phone = _phoneController.text;
                                       final password = _passwordController.text;
+                                      final passwordConfirm =
+                                          _passwordConfirmController.text;
+
+                                      if (npm.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'NPM tidak boleh kosong',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else if (email.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Email tidak boleh kosong',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else if (name.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Nama tidak boleh kosong',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else if (password.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Password tidak boleh kosong',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else if (passwordConfirm.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Konfirmasi password tidak boleh kosong',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else if (password != passwordConfirm) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Password dan konfirmasi password tidak sama!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else {
+                                        _registerBloc.add(ProsesRegister(
+                                                npm: npm,
+                                                name: name,
+                                                email: email,
+                                                phone: phone,
+                                                password: password)
+
 // Dispatch login event to Bloc
 
-                                      _registerBloc.add(ProsesRegister(
-                                          npm: npm,
-                                          name: name,
-                                          email: email,
-                                          phone: phone,
-                                          password: password));
+                                            );
+                                      }
                                     },
                                     padding: MySpacing.xy(20, 20),
                                     child: MyText.labelMedium("REGISTRASI",

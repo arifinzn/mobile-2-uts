@@ -38,6 +38,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   _addPost(AddPost event, Emitter emit) async {
+    emit(PostLoading());
     String desc = event.desc;
     XFile img = event.img;
     emit(PostLoading());

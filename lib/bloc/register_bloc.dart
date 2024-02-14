@@ -31,7 +31,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (res['status'] == true) {
       emit(RegisterSuccess(sessionToken: res['data']['session_token']));
     } else {
-      emit(RegisterFailure(error: 'Register failed'));
+      // emit(RegisterFailure(error: res['data']['pesan']));
+      emit(RegisterFailure(error: 'pesan'));
     }
   }
 }

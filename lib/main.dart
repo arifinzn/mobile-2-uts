@@ -99,11 +99,13 @@ class MyApp extends StatelessWidget {
       // ),
       home: BlocListener<LoginBloc, LoginState>(
         listener: (_, state) {
-          if (state is LoginSuccess) {
-            navService.pushTo(AppRoutes.home);
-          } else {
-            navService.pushTo(AppRoutes.login);
-          }
+          Future.delayed(const Duration(milliseconds: 1000), () {
+            if (state is LoginSuccess) {
+              navService.pushTo(AppRoutes.home);
+            } else {
+              navService.pushTo(AppRoutes.login);
+            }
+          });
         },
         child: const SplashScreen(),
       ),
